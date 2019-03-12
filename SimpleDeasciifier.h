@@ -13,6 +13,10 @@ protected:
     FsmMorphologicalAnalyzer fsm;
 private:
     void generateCandidateList(vector<string>& candidates, string word, int index);
+public:
+    explicit SimpleDeasciifier(FsmMorphologicalAnalyzer& fsm);
+    vector<string> candidateList(Word* word);
+    Sentence* deasciify(Sentence* sentence) override;
 };
 
 
