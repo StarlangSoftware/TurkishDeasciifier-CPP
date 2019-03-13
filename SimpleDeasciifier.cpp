@@ -25,46 +25,46 @@ void SimpleDeasciifier::generateCandidateList(vector<string> &candidates, string
                 string modified = candidates.at(i);
                 string ch = Word::Word::charAt(word, index);
                 if (ch == "ı"){
-                    modified[index] = 'i';
+                    modified = Word::substring(modified, 0, index) + "i" + Word::substring(modified, index + 1);
                 } else {
                     if (ch == "i"){
-                        modified[index] = 'ı';
+                        modified = Word::substring(modified, 0, index) + "ı" + Word::substring(modified, index + 1);
                     } else {
                         if (ch == "o"){
-                            modified[index] = 'ö';
+                            modified = Word::substring(modified, 0, index) + "ö" + Word::substring(modified, index + 1);
                         } else {
                             if (ch == "u"){
-                                modified[index] = 'ü';
+                                modified = Word::substring(modified, 0, index) + "ü" + Word::substring(modified, index + 1);
                             } else {
                                 if (ch == "g"){
-                                    modified[index] = 'ğ';
+                                    modified = Word::substring(modified, 0, index) + "ğ" + Word::substring(modified, index + 1);
                                 } else {
                                     if (ch == "c"){
-                                        modified[index] = 'ç';
+                                        modified = Word::substring(modified, 0, index) + "ç" + Word::substring(modified, index + 1);
                                     } else {
                                         if (ch == "s"){
-                                            modified[index] = 'ş';
+                                            modified = Word::substring(modified, 0, index) + "ş" + Word::substring(modified, index + 1);
                                         } else {
                                             if (ch == "I"){
-                                                modified[index] = 'ı';
+                                                modified = Word::substring(modified, 0, index) + "ı" + Word::substring(modified, index + 1);
                                             } else {
                                                 if (ch == "İ"){
-                                                    modified[index] = 'I';
+                                                    modified = Word::substring(modified, 0, index) + "I" + Word::substring(modified, index + 1);
                                                 } else {
                                                     if (ch == "O"){
-                                                        modified[index] = 'Ö';
+                                                        modified = Word::substring(modified, 0, index) + "Ö" + Word::substring(modified, index + 1);
                                                     } else {
                                                         if (ch == "U"){
-                                                            modified[index] = 'Ü';
+                                                            modified = Word::substring(modified, 0, index) + "Ü" + Word::substring(modified, index + 1);
                                                         } else {
                                                             if (ch == "G"){
-                                                                modified[index] = 'Ğ';
+                                                                modified = Word::substring(modified, 0, index) + "Ğ" + Word::substring(modified, index + 1);
                                                             } else {
                                                                 if (ch == "C"){
-                                                                    modified[index] = 'Ç';
+                                                                    modified = Word::substring(modified, 0, index) + "Ç" + Word::substring(modified, index + 1);
                                                                 } else {
                                                                     if (ch == "S"){
-                                                                        modified[index] = 'Ş';
+                                                                        modified = Word::substring(modified, 0, index) + "Ş" + Word::substring(modified, index + 1);
                                                                     }
                                                                 }
                                                             }
