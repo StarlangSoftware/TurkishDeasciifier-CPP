@@ -138,10 +138,15 @@ Sentence *SimpleDeasciifier::deasciify(Sentence *sentence) {
     auto* result = new Sentence();
     for (int i = 0; i < sentence->wordCount(); i++) {
         word = sentence->getWord(i);
-        candidates = candidateList(word);
-        if (!candidates.empty()) {
-            randomCandidate = random() % candidates.size();
-            newWord = new Word(candidates.at(randomCandidate));
+        FsmParseList fsmParseList = fsm.morphologicalAnalysis(word->getName());
+        if (fsmParseList.size() == 0){
+            candidates = candidateList(word);
+            if (!candidates.empty()) {
+                randomCandidate = random() % candidates.size();
+                newWord = new Word(candidates.at(randomCandidate));
+            } else {
+                newWord = word;
+            }
         } else {
             newWord = word;
         }
