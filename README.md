@@ -6,6 +6,7 @@ For Developers
 ============
 You can also see either [Python](https://github.com/olcaytaner/TurkishDeasciifier-Py) 
 or [Java](https://github.com/olcaytaner/TurkishDeasciifier) repository.
+
 ## Requirements
 
 * [C++ Compiler](#cpp)
@@ -50,3 +51,70 @@ Result: The imported project is listed in the Project Explorer view and files ar
 **From IDE**
 
 After being done with the downloading and opening project, select **Build Project** option from **Build** menu. After compilation process, user can run TurkishDeasciifier-CPP.
+
+Detailed Description
+============
++ [Asciifier](#using-asciifier)
++ [Deasciifier](#using-deasciifier)
+
+## Using Asciifier
+
+Asciifier converts text to a format containing only ASCII letters. This can be instantiated and used as follows:
+
+      Asciifier asciifier = new SimpleAsciifier();
+      Sentence sentence = new Sentence("çocuk"");
+      Sentence asciified = asciifier.asciify(sentence);
+      System.out.println(asciified);
+
+Output:
+    
+    cocuk      
+
+## Using Deasciifier
+
+Deasciifier converts text written with only ASCII letters to its correct form using corresponding letters in Turkish alphabet. There are two types of `Deasciifier`:
+
+
+* `SimpleDeasciifier`
+
+    The instantiation can be done as follows:  
+    
+        FsmMorphologicalAnalyzer fsm = new FsmMorphologicalAnalyzer();
+        Deasciifier deasciifier = new SimpleDeasciifier(fsm);
+     
+* `NGramDeasciifier`
+    
+    * To create an instance of this, both a `FsmMorphologicalAnalyzer` and a `NGram` is required. 
+    
+    * `FsmMorphologicalAnalyzer` can be instantiated as follows:
+        
+            FsmMorphologicalAnalyzer fsm = new FsmMorphologicalAnalyzer();
+    
+    * `NGram` can be either trained from scratch or loaded from an existing model.
+        
+        * Training from scratch:
+                
+                Corpus corpus = new Corpus("corpus.txt"); 
+                NGram ngram = new NGram(corpus.getAllWordsAsArrayList(), 1);
+                ngram.calculateNGramProbabilities(new LaplaceSmoothing());
+                
+        *There are many smoothing methods available. For other smoothing methods, check [here](https://github.com/olcaytaner/NGram).*       
+        * Loading from an existing model:
+     
+                 NGram ngram = new NGram("ngram.txt");
+
+	*For further details, please check [here](https://github.com/olcaytaner/NGram).*        
+            
+    * Afterwards, `NGramDeasciifier` can be created as below:
+        
+            Deasciifier deasciifier = new NGramDeasciifier(fsm, ngram);
+     
+A text can be deasciified as follows:
+     
+    Sentence sentence = new Sentence("cocuk");
+    Sentence deasciified = deasciifier.deasciify(sentence);
+    System.out.println(deasciified);
+    
+Output:
+
+    çocuk
