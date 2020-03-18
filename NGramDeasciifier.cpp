@@ -39,8 +39,8 @@ Sentence *NGramDeasciifier::deasciify(Sentence *sentence) {
         FsmParseList fsmParses = fsm.morphologicalAnalysis(word->getName());
         if (fsmParses.size() == 0) {
             candidates = candidateList(word);
-            bestCandidate = nullptr;
-            bestRoot = nullptr;
+            bestCandidate = word->getName();
+            bestRoot = word;
             bestProbability = 0;
             for (const string &candidate : candidates) {
                 FsmParseList fsmParseList = fsm.morphologicalAnalysis(candidate);
