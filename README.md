@@ -61,10 +61,10 @@ Detailed Description
 
 Asciifier converts text to a format containing only ASCII letters. This can be instantiated and used as follows:
 
-      Asciifier asciifier = new SimpleAsciifier();
-      Sentence sentence = new Sentence("çocuk"");
-      Sentence asciified = asciifier.asciify(sentence);
-      System.out.println(asciified);
+      Asciifier asciifier = SimpleAsciifier();
+      Sentence* sentence = new Sentence("çocuk"");
+      Sentence* asciified = asciifier.asciify(sentence);
+      cout << asciified;
 
 Output:
     
@@ -79,8 +79,8 @@ Deasciifier converts text written with only ASCII letters to its correct form us
 
     The instantiation can be done as follows:  
     
-        FsmMorphologicalAnalyzer fsm = new FsmMorphologicalAnalyzer();
-        Deasciifier deasciifier = new SimpleDeasciifier(fsm);
+        FsmMorphologicalAnalyzer fsm = FsmMorphologicalAnalyzer();
+        Deasciifier deasciifier = SimpleDeasciifier(fsm);
      
 * `NGramDeasciifier`
     
@@ -88,32 +88,32 @@ Deasciifier converts text written with only ASCII letters to its correct form us
     
     * `FsmMorphologicalAnalyzer` can be instantiated as follows:
         
-            FsmMorphologicalAnalyzer fsm = new FsmMorphologicalAnalyzer();
+            FsmMorphologicalAnalyzer fsm = FsmMorphologicalAnalyzer();
     
     * `NGram` can be either trained from scratch or loaded from an existing model.
         
         * Training from scratch:
                 
-                Corpus corpus = new Corpus("corpus.txt"); 
-                NGram ngram = new NGram(corpus.getAllWordsAsArrayList(), 1);
-                ngram.calculateNGramProbabilities(new LaplaceSmoothing());
+                Corpus corpus = Corpus("corpus.txt"); 
+                NGram ngram = NGram(corpus.getAllWordsAsArrayList(), 1);
+                ngram.calculateNGramProbabilities(LaplaceSmoothing());
                 
         *There are many smoothing methods available. For other smoothing methods, check [here](https://github.com/olcaytaner/NGram).*       
         * Loading from an existing model:
      
-                 NGram ngram = new NGram("ngram.txt");
+                 NGram ngram = NGram("ngram.txt");
 
 	*For further details, please check [here](https://github.com/olcaytaner/NGram).*        
             
     * Afterwards, `NGramDeasciifier` can be created as below:
         
-            Deasciifier deasciifier = new NGramDeasciifier(fsm, ngram);
+            Deasciifier deasciifier = NGramDeasciifier(fsm, ngram);
      
 A text can be deasciified as follows:
      
-    Sentence sentence = new Sentence("cocuk");
-    Sentence deasciified = deasciifier.deasciify(sentence);
-    System.out.println(deasciified);
+    Sentence* sentence = new Sentence("cocuk");
+    Sentence* deasciified = deasciifier.deasciify(sentence);
+    cout << deasciified;
     
 Output:
 
