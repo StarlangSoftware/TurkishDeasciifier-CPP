@@ -31,7 +31,7 @@ Use Git for cloning the code to your local or below line for Ubuntu:
 
 A directory called TurkishDeasciifier-CPP will be created. Or you can use below link for exploring the code:
 
-	git clone https://github.com/olcaytaner/TurkishDeasciifier-CPP.git
+	git clone https://github.com/starlangsoftware/TurkishDeasciifier-CPP.git
 
 ## Open project with CLion IDE
 
@@ -103,7 +103,7 @@ Deasciifier converts text written with only ASCII letters to its correct form us
      
                  NGram ngram = NGram("ngram.txt");
 
-	*For further details, please check [here](https://github.com/olcaytaner/NGram).*        
+	*For further details, please check [here](https://github.com/starlangsoftware/NGram).*        
             
     * Afterwards, `NGramDeasciifier` can be created as below:
         
