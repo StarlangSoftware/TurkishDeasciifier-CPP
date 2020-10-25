@@ -15,6 +15,7 @@ private:
     NGram<string> nGram = NGram<string>(1);
 public:
     NGramDeasciifier(FsmMorphologicalAnalyzer fsm, NGram<string>& nGram);
+    Word* checkAnalysisAndSetRoot(Sentence* sentence, int index);
     Sentence* deasciify(Sentence* sentence) override;
 };
 

@@ -28,40 +28,65 @@ NGramDeasciifier::NGramDeasciifier(FsmMorphologicalAnalyzer fsm, NGram <string> 
  * @return Sentence result as output.
  */
 Sentence *NGramDeasciifier::deasciify(Sentence *sentence) {
-    Word *word, *bestRoot;
-    Word *previousRoot = nullptr, *root;
+    Word* word, *bestRoot, *previousRoot = nullptr, *root, *nextRoot;
     string bestCandidate;
-    double probability, bestProbability;
+    FsmParseList fsmParses;
+    double previousProbability, nextProbability, bestProbability;
     vector<string> candidates;
     auto* result = new Sentence();
+    root = checkAnalysisAndSetRoot(sentence, 0);
+    nextRoot = checkAnalysisAndSetRoot(sentence, 1);
     for (int i = 0; i < sentence->wordCount(); i++) {
         word = sentence->getWord(i);
-        FsmParseList fsmParses = fsm.morphologicalAnalysis(word->getName());
-        if (fsmParses.size() == 0) {
+        if (root == nullptr) {
             candidates = candidateList(word);
             bestCandidate = word->getName();
             bestRoot = word;
             bestProbability = 0;
             for (const string &candidate : candidates) {
-                FsmParseList fsmParseList = fsm.morphologicalAnalysis(candidate);
-                root = fsmParseList.getFsmParse(0).getWord();
+                fsmParses = fsm.morphologicalAnalysis(candidate);
+                root = fsmParses.getParseWithLongestRootWord().getWord();
                 if (previousRoot != nullptr) {
-                    probability = nGram.getProbability({previousRoot->getName(), root->getName()});
+                    previousProbability = nGram.getProbability({previousRoot->getName(), root->getName()});
                 } else {
-                    probability = nGram.getProbability({root->getName()});
+                    previousProbability = 0.0;
                 }
-                if (probability > bestProbability) {
+                if (nextRoot != nullptr) {
+                    nextProbability = nGram.getProbability({root->getName(), nextRoot->getName()});
+                } else {
+                    nextProbability = 0.0;
+                }
+                if (std::max(previousProbability, nextProbability) > bestProbability) {
                     bestCandidate = candidate;
                     bestRoot = root;
-                    bestProbability = probability;
+                    bestProbability = std::max(previousProbability, nextProbability);
                 }
             }
-            previousRoot = bestRoot;
+            root = bestRoot;
             result->addWord(new Word(bestCandidate));
         } else {
             result->addWord(word);
-            previousRoot = fsmParses.getParseWithLongestRootWord().getWord();
         }
+        previousRoot = root;
+        root = nextRoot;
+        nextRoot = checkAnalysisAndSetRoot(sentence, i + 2);
     }
     return result;
+}
+
+/**
+ * Checks the morphological analysis of the given word in the given index. If there is no misspelling, it returns
+ * the longest root word of the possible analyses.
+ * @param sentence Sentence to be analyzed.
+ * @param index Index of the word
+ * @return If the word is misspelled, null; otherwise the longest root word of the possible analyses.
+ */
+Word *NGramDeasciifier::checkAnalysisAndSetRoot(Sentence *sentence, int index) {
+    if (index < sentence->wordCount()){
+        FsmParseList fsmParses = fsm.morphologicalAnalysis(sentence->getWord(index)->getName());
+        if (fsmParses.size() != 0){
+            return fsmParses.getParseWithLongestRootWord().getWord();
+        }
+    }
+    return nullptr;
 }
