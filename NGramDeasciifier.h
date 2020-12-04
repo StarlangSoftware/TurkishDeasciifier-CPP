@@ -13,8 +13,9 @@
 class NGramDeasciifier : SimpleDeasciifier {
 private:
     NGram<string> nGram = NGram<string>(1);
+    bool rootNGram = false;
 public:
-    NGramDeasciifier(FsmMorphologicalAnalyzer fsm, NGram<string>& nGram);
+    NGramDeasciifier(FsmMorphologicalAnalyzer fsm, NGram<string>& nGram, bool rootNGram);
     Word* checkAnalysisAndSetRoot(Sentence* sentence, int index);
     Sentence* deasciify(Sentence* sentence) override;
 };
