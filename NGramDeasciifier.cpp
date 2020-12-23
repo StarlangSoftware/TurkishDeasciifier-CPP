@@ -43,7 +43,7 @@ Sentence *NGramDeasciifier::deasciify(Sentence *sentence) {
             candidates = candidateList(word);
             bestCandidate = word->getName();
             bestRoot = word;
-            bestProbability = 0;
+            bestProbability = threshold;
             for (const string &candidate : candidates) {
                 fsmParses = fsm.morphologicalAnalysis(candidate);
                 if (rootNGram){
@@ -98,4 +98,8 @@ Word *NGramDeasciifier::checkAnalysisAndSetRoot(Sentence *sentence, int index) {
         }
     }
     return nullptr;
+}
+
+void NGramDeasciifier::setThreshold(double threshold) {
+    this->threshold = threshold;
 }

@@ -14,9 +14,11 @@ class NGramDeasciifier : SimpleDeasciifier {
 private:
     NGram<string> nGram = NGram<string>(1);
     bool rootNGram = false;
+    double threshold = 0.0;
 public:
     NGramDeasciifier(FsmMorphologicalAnalyzer fsm, NGram<string>& nGram, bool rootNGram);
     Word* checkAnalysisAndSetRoot(Sentence* sentence, int index);
+    void setThreshold(double threshold);
     Sentence* deasciify(Sentence* sentence) override;
 };
 
