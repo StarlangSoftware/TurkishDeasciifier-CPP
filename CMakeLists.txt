@@ -7,7 +7,7 @@ include_directories(include)
 link_directories(library)
 
 add_library(Deasciifier Asciifier.h Deasciifier.h SimpleAsciifier.cpp SimpleAsciifier.h SimpleDeasciifier.cpp SimpleDeasciifier.h NGramDeasciifier.cpp NGramDeasciifier.h)
-add_executable(TestDeasciifier Asciifier.h Deasciifier.h SimpleAsciifier.cpp SimpleAsciifier.h SimpleDeasciifier.cpp SimpleDeasciifier.h NGramDeasciifier.cpp NGramDeasciifier.h TestDeasciifier.cpp)
+add_executable(Test Asciifier.h Deasciifier.h SimpleAsciifier.cpp SimpleAsciifier.h SimpleDeasciifier.cpp SimpleDeasciifier.h NGramDeasciifier.cpp NGramDeasciifier.h Test/SimpleAsciifierTest.cpp Test/SimpleDeasciifierTest.cpp Test/NGramDeasciifierTest.cpp)
 
 target_link_libraries(Deasciifier MorphologicalAnalysis Dictionary XmlParser Corpus)
-target_link_libraries(TestDeasciifier MorphologicalAnalysis Dictionary XmlParser Corpus)
+target_link_libraries(Test MorphologicalAnalysis Dictionary XmlParser Corpus)

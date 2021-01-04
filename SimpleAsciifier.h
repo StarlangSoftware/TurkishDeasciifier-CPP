@@ -10,10 +10,10 @@
 #include "Word.h"
 
 class SimpleAsciifier : public Asciifier {
-private:
-    string asciify(Word* word);
 public:
     Sentence* asciify(Sentence* sentence);
+
+    string asciify(Word* word);
 };
 
 

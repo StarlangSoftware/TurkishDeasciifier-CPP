@@ -52,6 +52,8 @@ string SimpleAsciifier::asciify(Word *word) {
                                                 } else {
                                                     if (allCharacters[i] == "İ"){
                                                         modified += "I";
+                                                    } else {
+                                                        modified += allCharacters[i];
                                                     }
                                                 }
                                             }

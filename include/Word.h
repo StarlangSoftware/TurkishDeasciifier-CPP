@@ -33,6 +33,7 @@ public:
     static string trim(string str);
     static int size(string surfaceForm);
     static string toLowerCase(string surfaceForm);
+    static string toUpperCase(string surfaceForm);
     static string lastChar(string surfaceForm);
     static string charAt(string surfaceForm, int index);
     static string* allCharacters(string surfaceForm);
