@@ -3,7 +3,7 @@ This tool is used to turn Turkish text written in ASCII characters, which do not
 For Developers
 ============
 
-You can also see [Java](https://github.com/starlangsoftware/TurkishDeasciifier), [Python](https://github.com/starlangsoftware/TurkishDeasciifier-Py), [Cython](https://github.com/starlangsoftware/TurkishDeasciifier-Cy), or [C#](https://github.com/starlangsoftware/TurkishDeasciifier-CS) repository.
+You can also see [Java](https://github.com/starlangsoftware/TurkishDeasciifier), [Python](https://github.com/starlangsoftware/TurkishDeasciifier-Py), [Cython](https://github.com/starlangsoftware/TurkishDeasciifier-Cy), [Swift](https://github.com/starlangsoftware/TurkishDeasciifier-Swift), or [C#](https://github.com/starlangsoftware/TurkishDeasciifier-CS) repository.
 
 ## Requirements
 
