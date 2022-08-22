@@ -4,8 +4,8 @@
 
 #include <FsmMorphologicalAnalyzer.h>
 #include "catch.hpp"
-#include "../NGramDeasciifier.h"
-#include "../SimpleAsciifier.h"
+#include "../src/NGramDeasciifier.h"
+#include "../src/SimpleAsciifier.h"
 #include <NoSmoothing.h>
 #include <Corpus.h>
 

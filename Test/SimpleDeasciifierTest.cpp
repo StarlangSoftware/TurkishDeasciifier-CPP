@@ -3,8 +3,8 @@
 //
 
 #include "catch.hpp"
-#include "../SimpleDeasciifier.h"
-#include "../SimpleAsciifier.h"
+#include "../src/SimpleDeasciifier.h"
+#include "../src/SimpleAsciifier.h"
 
 TEST_CASE("SimpleDeasciifierTest-testDeasciify") {
     FsmMorphologicalAnalyzer fsm = FsmMorphologicalAnalyzer();
