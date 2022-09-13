@@ -49,7 +49,7 @@ TEST_CASE("NGramDeasciifierTest-testDeasciify3") {
     LaplaceSmoothing<string> simpleSmoothing;
     simpleSmoothing.setProbabilities(*nGram);
     NGramDeasciifier nGramDeasciifier = NGramDeasciifier(fsm, *nGram, true);
-    REQUIRE("dün akşam yeni aldığımız çam ağacını süsledik" == nGramDeasciifier.deasciify(new Sentence("dün akşam yenı aldıgımız cam agacini susledık"))->to_string());
+    REQUIRE("dün akşam yeni aldığımız çam ağacını süsledik" == nGramDeasciifier.deasciify(new Sentence("dün aksam yenı aldıgımız cam agacini susledık"))->to_string());
     REQUIRE("ünlü sanatçı tartışmalı konu hakkında demeç vermekten kaçındı" == nGramDeasciifier.deasciify(new Sentence("unlu sanatci tartismali konu hakkinda demec vermekten kacindi"))->to_string());
     REQUIRE("köylü de durumdan oldukça şikayetçiydi" == nGramDeasciifier.deasciify(new Sentence("koylu de durumdan oldukca şikayetciydi"))->to_string());
 }
