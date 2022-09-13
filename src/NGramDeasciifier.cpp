@@ -3,6 +3,7 @@
 //
 
 #include "NGramDeasciifier.h"
+#include <fstream>
 
 /**
  * A constructor of {@link NGramDeasciifier} class which takes an {@link FsmMorphologicalAnalyzer} and an {@link NGram}
@@ -15,6 +16,7 @@
 NGramDeasciifier::NGramDeasciifier(FsmMorphologicalAnalyzer fsm, NGram <string> &nGram, bool rootNgram) : SimpleDeasciifier(fsm) {
     this->nGram = nGram;
     this->rootNGram = rootNgram;
+    loadAsciifiedSameList();
 }
 
 /**
@@ -31,50 +33,69 @@ NGramDeasciifier::NGramDeasciifier(FsmMorphologicalAnalyzer fsm, NGram <string> 
 Sentence *NGramDeasciifier::deasciify(Sentence *sentence) {
     Word* word, *bestRoot, *previousRoot = nullptr, *root, *nextRoot;
     string bestCandidate;
+    bool isAsciifiedSame;
     FsmParseList fsmParses;
     double previousProbability, nextProbability, bestProbability;
     vector<string> candidates;
     auto* result = new Sentence();
     root = checkAnalysisAndSetRoot(sentence, 0);
     nextRoot = checkAnalysisAndSetRoot(sentence, 1);
-    for (int i = 0; i < sentence->wordCount(); i++) {
-        word = sentence->getWord(i);
-        if (root == nullptr) {
-            candidates = candidateList(word);
-            bestCandidate = word->getName();
-            bestRoot = word;
-            bestProbability = threshold;
-            for (const string &candidate : candidates) {
-                fsmParses = fsm.morphologicalAnalysis(candidate);
-                if (rootNGram){
-                    root = fsmParses.getParseWithLongestRootWord().getWord();
-                } else {
-                    root = new Word(candidate);
-                }
-                if (previousRoot != nullptr) {
-                    previousProbability = nGram.getProbability({previousRoot->getName(), root->getName()});
-                } else {
-                    previousProbability = 0.0;
-                }
-                if (nextRoot != nullptr) {
-                    nextProbability = nGram.getProbability({root->getName(), nextRoot->getName()});
-                } else {
-                    nextProbability = 0.0;
-                }
-                if (std::max(previousProbability, nextProbability) > bestProbability) {
-                    bestCandidate = candidate;
-                    bestRoot = root;
-                    bestProbability = std::max(previousProbability, nextProbability);
-                }
+    for (int repeat = 0; repeat < 2; repeat++){
+        for (int i = 0; i < sentence->wordCount(); i++) {
+            candidates.clear();
+            isAsciifiedSame = false;
+            word = sentence->getWord(i);
+            if (asciifiedSame.contains(word->getName())){
+                candidates.emplace_back(word->getName());
+                candidates.emplace_back(asciifiedSame[word->getName()]);
+                isAsciifiedSame = true;
             }
-            root = bestRoot;
-            result->addWord(new Word(bestCandidate));
-        } else {
-            result->addWord(word);
+            if (root == nullptr || isAsciifiedSame) {
+                if (!isAsciifiedSame){
+                    candidates = candidateList(word);
+                }
+                bestCandidate = word->getName();
+                bestRoot = word;
+                bestProbability = threshold;
+                for (const string &candidate : candidates) {
+                    fsmParses = fsm.morphologicalAnalysis(candidate);
+                    if (rootNGram && !isAsciifiedSame){
+                        root = fsmParses.getParseWithLongestRootWord().getWord();
+                    } else {
+                        root = new Word(candidate);
+                    }
+                    if (previousRoot != nullptr) {
+                        previousProbability = nGram.getProbability({previousRoot->getName(), root->getName()});
+                    } else {
+                        previousProbability = 0.0;
+                    }
+                    if (nextRoot != nullptr) {
+                        nextProbability = nGram.getProbability({root->getName(), nextRoot->getName()});
+                    } else {
+                        nextProbability = 0.0;
+                    }
+                    if (std::max(previousProbability, nextProbability) > bestProbability) {
+                        bestCandidate = candidate;
+                        bestRoot = root;
+                        bestProbability = std::max(previousProbability, nextProbability);
+                    }
+                }
+                root = bestRoot;
+                result->addWord(new Word(bestCandidate));
+            } else {
+                result->addWord(word);
+            }
+            previousRoot = root;
+            root = nextRoot;
+            nextRoot = checkAnalysisAndSetRoot(sentence, i + 2);
         }
-        previousRoot = root;
-        root = nextRoot;
-        nextRoot = checkAnalysisAndSetRoot(sentence, i + 2);
+        sentence = result;
+        if (repeat < 1){
+            result = new Sentence();
+            previousRoot = nullptr;
+            root = checkAnalysisAndSetRoot(sentence, 0);
+            nextRoot = checkAnalysisAndSetRoot(sentence, 1);
+        }
     }
     return result;
 }
@@ -102,4 +123,15 @@ Word *NGramDeasciifier::checkAnalysisAndSetRoot(Sentence *sentence, int index) {
 
 void NGramDeasciifier::setThreshold(double threshold) {
     this->threshold = threshold;
+}
+
+void NGramDeasciifier::loadAsciifiedSameList() {
+    ifstream inputStream;
+    inputStream.open("asciified-same.txt", ifstream::in);
+    string line;
+    while (inputStream.good()){
+        getline(inputStream, line);
+        vector<string> items = Word::split(line);
+        asciifiedSame.emplace(items[0], items[1]);
+    }
 }
