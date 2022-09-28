@@ -40,62 +40,53 @@ Sentence *NGramDeasciifier::deasciify(Sentence *sentence) {
     auto* result = new Sentence();
     root = checkAnalysisAndSetRoot(sentence, 0);
     nextRoot = checkAnalysisAndSetRoot(sentence, 1);
-    for (int repeat = 0; repeat < 2; repeat++){
-        for (int i = 0; i < sentence->wordCount(); i++) {
-            candidates.clear();
-            isAsciifiedSame = false;
-            word = sentence->getWord(i);
-            if (asciifiedSame.contains(word->getName())){
-                candidates.emplace_back(word->getName());
-                candidates.emplace_back(asciifiedSame[word->getName()]);
-                isAsciifiedSame = true;
-            }
-            if (root == nullptr || isAsciifiedSame) {
-                if (!isAsciifiedSame){
-                    candidates = candidateList(word);
-                }
-                bestCandidate = word->getName();
-                bestRoot = word;
-                bestProbability = threshold;
-                for (const string &candidate : candidates) {
-                    fsmParses = fsm.morphologicalAnalysis(candidate);
-                    if (rootNGram && !isAsciifiedSame){
-                        root = fsmParses.getParseWithLongestRootWord().getWord();
-                    } else {
-                        root = new Word(candidate);
-                    }
-                    if (previousRoot != nullptr) {
-                        previousProbability = nGram.getProbability({previousRoot->getName(), root->getName()});
-                    } else {
-                        previousProbability = 0.0;
-                    }
-                    if (nextRoot != nullptr) {
-                        nextProbability = nGram.getProbability({root->getName(), nextRoot->getName()});
-                    } else {
-                        nextProbability = 0.0;
-                    }
-                    if (std::max(previousProbability, nextProbability) > bestProbability) {
-                        bestCandidate = candidate;
-                        bestRoot = root;
-                        bestProbability = std::max(previousProbability, nextProbability);
-                    }
-                }
-                root = bestRoot;
-                result->addWord(new Word(bestCandidate));
-            } else {
-                result->addWord(word);
-            }
-            previousRoot = root;
-            root = nextRoot;
-            nextRoot = checkAnalysisAndSetRoot(sentence, i + 2);
+    for (int i = 0; i < sentence->wordCount(); i++) {
+        candidates.clear();
+        isAsciifiedSame = false;
+        word = sentence->getWord(i);
+        if (asciifiedSame.contains(word->getName())){
+            candidates.emplace_back(word->getName());
+            candidates.emplace_back(asciifiedSame[word->getName()]);
+            isAsciifiedSame = true;
         }
-        sentence = result;
-        if (repeat < 1){
-            result = new Sentence();
-            previousRoot = nullptr;
-            root = checkAnalysisAndSetRoot(sentence, 0);
-            nextRoot = checkAnalysisAndSetRoot(sentence, 1);
+        if (root == nullptr || isAsciifiedSame) {
+            if (!isAsciifiedSame){
+                candidates = candidateList(word);
+            }
+            bestCandidate = word->getName();
+            bestRoot = word;
+            bestProbability = threshold;
+            for (const string &candidate : candidates) {
+                fsmParses = fsm.morphologicalAnalysis(candidate);
+                if (rootNGram && !isAsciifiedSame){
+                    root = fsmParses.getParseWithLongestRootWord().getWord();
+                } else {
+                    root = new Word(candidate);
+                }
+                if (previousRoot != nullptr) {
+                    previousProbability = nGram.getProbability({previousRoot->getName(), root->getName()});
+                } else {
+                    previousProbability = 0.0;
+                }
+                if (nextRoot != nullptr) {
+                    nextProbability = nGram.getProbability({root->getName(), nextRoot->getName()});
+                } else {
+                    nextProbability = 0.0;
+                }
+                if (std::max(previousProbability, nextProbability) > bestProbability) {
+                    bestCandidate = candidate;
+                    bestRoot = root;
+                    bestProbability = std::max(previousProbability, nextProbability);
+                }
+            }
+            root = bestRoot;
+            result->addWord(new Word(bestCandidate));
+        } else {
+            result->addWord(word);
         }
+        previousRoot = root;
+        root = nextRoot;
+        nextRoot = checkAnalysisAndSetRoot(sentence, i + 2);
     }
     return result;
 }
