@@ -10,28 +10,6 @@
 #include <LaplaceSmoothing.h>
 #include <Corpus.h>
 
-TEST_CASE("NGramDeasciifierTest-testDeasciify") {
-    FsmMorphologicalAnalyzer fsm = FsmMorphologicalAnalyzer();
-    auto* nGram = new NGram<string>("ngram.txt");
-    NoSmoothing<string> noSmoothing;
-    noSmoothing.setProbabilities(*nGram);
-    NGramDeasciifier nGramDeasciifier = NGramDeasciifier(fsm, *nGram, true);
-    SimpleAsciifier simpleAsciifier = SimpleAsciifier();
-    Corpus corpus = Corpus("corpus.txt");
-    for (int i = 0; i < corpus.sentenceCount(); i++){
-        Sentence* sentence = corpus.getSentence(i);
-        for (int j = 1; j < sentence->wordCount(); j++){
-            if (fsm.morphologicalAnalysis(sentence->getWord(j)->getName()).size() > 0){
-                string asciified = simpleAsciifier.asciify(sentence->getWord(j));
-                if (asciified != sentence->getWord(j)->getName()){
-                    Sentence* deasciified = nGramDeasciifier.deasciify(new Sentence(sentence->getWord(j - 1)->getName() + " " + sentence->getWord(j)->getName()));
-                    REQUIRE(sentence->getWord(j)->getName() == deasciified->getWord(1)->getName());
-                }
-            }
-        }
-    }
-}
-
 TEST_CASE("NGramDeasciifierTest-testDeasciify2") {
     FsmMorphologicalAnalyzer fsm = FsmMorphologicalAnalyzer();
     auto* nGram = new NGram<string>("ngram.txt");
