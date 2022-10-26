@@ -13,7 +13,7 @@
  * @param fsm   {@link FsmMorphologicalAnalyzer} type input.
  * @param nGram {@link NGram} type input.
  */
-NGramDeasciifier::NGramDeasciifier(FsmMorphologicalAnalyzer fsm, NGram <string> &nGram, bool rootNgram) : SimpleDeasciifier(fsm) {
+NGramDeasciifier::NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, const NGram <string> &nGram, bool rootNgram) : SimpleDeasciifier(fsm) {
     this->nGram = nGram;
     this->rootNGram = rootNgram;
     loadAsciifiedSameList();

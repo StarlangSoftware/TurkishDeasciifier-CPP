@@ -16,7 +16,7 @@
  * @param word       {@link String} input.
  * @param index      {@link Integer} input.
  */
-void SimpleDeasciifier::generateCandidateList(vector<string> &candidates, string word, int index) {
+void SimpleDeasciifier::generateCandidateList(vector<string> &candidates, const string& word, int index) const{
     string s = "ıiougcsİIOUGCS";
     if (index < Word::size(word)) {
         if (s.find(Word::charAt(word, index)) != string::npos) {
@@ -116,7 +116,7 @@ vector<string> SimpleDeasciifier::candidateList(Word *word) {
  *
  * @param fsm {@link FsmMorphologicalAnalyzer} type input.
  */
-SimpleDeasciifier::SimpleDeasciifier(FsmMorphologicalAnalyzer& fsm) {
+SimpleDeasciifier::SimpleDeasciifier(const FsmMorphologicalAnalyzer& fsm) {
     this->fsm = fsm;
 }
 

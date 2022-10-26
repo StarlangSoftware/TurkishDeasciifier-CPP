@@ -20,7 +20,7 @@ private:
     double threshold = 0.0;
     unordered_map<string, string> asciifiedSame;
 public:
-    NGramDeasciifier(FsmMorphologicalAnalyzer fsm, NGram<string>& nGram, bool rootNGram);
+    NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, const NGram<string>& nGram, bool rootNGram);
     Word* checkAnalysisAndSetRoot(Sentence* sentence, int index);
     void setThreshold(double threshold);
     void loadAsciifiedSameList();

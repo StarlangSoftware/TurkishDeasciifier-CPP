@@ -12,9 +12,9 @@ class SimpleDeasciifier : public Deasciifier{
 protected:
     FsmMorphologicalAnalyzer fsm;
 private:
-    void generateCandidateList(vector<string>& candidates, string word, int index);
+    void generateCandidateList(vector<string>& candidates, const string& word, int index) const;
 public:
-    explicit SimpleDeasciifier(FsmMorphologicalAnalyzer& fsm);
+    explicit SimpleDeasciifier(const FsmMorphologicalAnalyzer& fsm);
     vector<string> candidateList(Word* word);
     Sentence* deasciify(Sentence* sentence) override;
 };

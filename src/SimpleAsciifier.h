@@ -12,7 +12,6 @@
 class SimpleAsciifier : public Asciifier {
 public:
     Sentence* asciify(Sentence* sentence);
-
     string asciify(Word* word);
 };
 
