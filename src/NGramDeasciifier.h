@@ -15,12 +15,12 @@ using namespace std;
 
 class NGramDeasciifier : SimpleDeasciifier {
 private:
-    NGram<string> nGram = NGram<string>(1);
+    NGram<string>* nGram = new NGram<string>(1);
     bool rootNGram = false;
     double threshold = 0.0;
     unordered_map<string, string> asciifiedSame;
 public:
-    NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, const NGram<string>& nGram, bool rootNGram);
+    NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, NGram<string>* nGram, bool rootNGram);
     Word* checkAnalysisAndSetRoot(Sentence* sentence, int index);
     void setThreshold(double threshold);
     void loadAsciifiedSameList();

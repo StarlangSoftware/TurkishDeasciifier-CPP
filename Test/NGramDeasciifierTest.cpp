@@ -11,9 +11,9 @@
 
 TEST_CASE("NGramDeasciifierTest-testDeasciify2") {
     FsmMorphologicalAnalyzer fsm = FsmMorphologicalAnalyzer();
-    NGram nGram = NGram<string>("ngram.txt");
+    auto* nGram = new NGram<string>("ngram.txt");
     NoSmoothing<string> noSmoothing;
-    noSmoothing.setProbabilities(nGram);
+    noSmoothing.setProbabilities(*nGram);
     NGramDeasciifier nGramDeasciifier = NGramDeasciifier(fsm, nGram, false);
     REQUIRE("noter hakkında" == nGramDeasciifier.deasciify(new Sentence("noter hakkinda"))->to_string());
     REQUIRE("sandık medrese" == nGramDeasciifier.deasciify(new Sentence("sandik medrese"))->to_string());
@@ -22,9 +22,9 @@ TEST_CASE("NGramDeasciifierTest-testDeasciify2") {
 
 TEST_CASE("NGramDeasciifierTest-testDeasciify3") {
     FsmMorphologicalAnalyzer fsm = FsmMorphologicalAnalyzer();
-    NGram nGram = NGram<string>("ngram.txt");
+    auto* nGram = new NGram<string>("ngram.txt");
     LaplaceSmoothing<string> simpleSmoothing;
-    simpleSmoothing.setProbabilities(nGram);
+    simpleSmoothing.setProbabilities(*nGram);
     NGramDeasciifier nGramDeasciifier = NGramDeasciifier(fsm, nGram, true);
     REQUIRE("dün akşam yeni aldığımız çam ağacını süsledik" == nGramDeasciifier.deasciify(new Sentence("dün aksam yenı aldıgımız cam ağacını susledık"))->to_string());
     REQUIRE("ünlü sanatçı tartışmalı konu hakkında demeç vermekten kaçındı" == nGramDeasciifier.deasciify(new Sentence("unlu sanatçı tartismali konu hakkinda demec vermekten kacindi"))->to_string());

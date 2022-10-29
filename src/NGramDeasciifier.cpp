@@ -13,7 +13,7 @@
  * @param fsm   {@link FsmMorphologicalAnalyzer} type input.
  * @param nGram {@link NGram} type input.
  */
-NGramDeasciifier::NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, const NGram <string> &nGram, bool rootNgram) : SimpleDeasciifier(fsm) {
+NGramDeasciifier::NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, NGram<string>* nGram, bool rootNgram) : SimpleDeasciifier(fsm) {
     this->nGram = nGram;
     this->rootNGram = rootNgram;
     loadAsciifiedSameList();
@@ -64,12 +64,12 @@ Sentence *NGramDeasciifier::deasciify(Sentence *sentence) {
                     root = new Word(candidate);
                 }
                 if (previousRoot != nullptr) {
-                    previousProbability = nGram.getProbability({previousRoot->getName(), root->getName()});
+                    previousProbability = nGram->getProbability({previousRoot->getName(), root->getName()});
                 } else {
                     previousProbability = 0.0;
                 }
                 if (nextRoot != nullptr) {
-                    nextProbability = nGram.getProbability({root->getName(), nextRoot->getName()});
+                    nextProbability = nGram->getProbability({root->getName(), nextRoot->getName()});
                 } else {
                     nextProbability = 0.0;
                 }
