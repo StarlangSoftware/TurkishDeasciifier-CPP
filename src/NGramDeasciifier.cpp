@@ -73,7 +73,7 @@ Sentence *NGramDeasciifier::deasciify(Sentence *sentence) {
                 } else {
                     nextProbability = 0.0;
                 }
-                if (std::max(previousProbability, nextProbability) > bestProbability) {
+                if (std::max(previousProbability, nextProbability) > bestProbability || candidates.size() == 1) {
                     bestCandidate = candidate;
                     bestRoot = root;
                     bestProbability = std::max(previousProbability, nextProbability);
