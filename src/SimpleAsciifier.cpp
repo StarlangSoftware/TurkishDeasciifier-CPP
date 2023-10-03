@@ -5,11 +5,11 @@
 #include "SimpleAsciifier.h"
 
 /**
- * The asciify method takes a {@link Word} as an input and converts it to a char {@link java.lang.reflect.Array}. Then,
+ * The asciify method takes a Word as an input and converts it to a char {@link java.lang.reflect.Array}. Then,
  * loops i times where i ranges from 0 to length of the char {@link java.lang.reflect.Array} and substitutes Turkish
- * characters with their corresponding Latin versions and returns it as a new {@link String}.
+ * characters with their corresponding Latin versions and returns it as a new String.
  *
- * @param word {@link Word} type input to asciify.
+ * @param word Word type input to asciify.
  * @return String output which is asciified.
  */
 string SimpleAsciifier::asciify(Word *word) {
@@ -71,11 +71,11 @@ string SimpleAsciifier::asciify(Word *word) {
 }
 
 /**
- * Another asciify method which takes a {@link Sentence} as an input. It loops i times where i ranges form 0 to number of
- * words in the given sentence. First it gets each word and calls asciify with current word and creates {@link Word}
- * with returned String. At the and, adds each newly created ascified words to the result {@link Sentence}.
+ * Another asciify method which takes a Sentence as an input. It loops i times where i ranges form 0 to number of
+ * words in the given sentence. First it gets each word and calls asciify with current word and creates Word
+ * with returned String. At the and, adds each newly created ascified words to the result Sentence.
  *
- * @param sentence {@link Sentence} type input.
+ * @param sentence Sentence type input.
  * @return Sentence output which is asciified.
  */
 Sentence *SimpleAsciifier::asciify(Sentence *sentence) {

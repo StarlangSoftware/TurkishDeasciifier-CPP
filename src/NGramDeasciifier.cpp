@@ -6,12 +6,12 @@
 #include <fstream>
 
 /**
- * A constructor of {@link NGramDeasciifier} class which takes an {@link FsmMorphologicalAnalyzer} and an {@link NGram}
- * as inputs. It first calls it super class {@link SimpleDeasciifier} with given {@link FsmMorphologicalAnalyzer} input
- * then initializes nGram variable with given {@link NGram} input.
+ * A constructor of NGramDeasciifier class which takes an FsmMorphologicalAnalyzer and an NGram
+ * as inputs. It first calls it super class SimpleDeasciifier with given FsmMorphologicalAnalyzer input
+ * then initializes nGram variable with given NGram input.
  *
- * @param fsm   {@link FsmMorphologicalAnalyzer} type input.
- * @param nGram {@link NGram} type input.
+ * @param fsm   FsmMorphologicalAnalyzer type input.
+ * @param nGram NGram type input.
  */
 NGramDeasciifier::NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, NGram<string>* nGram, bool rootNgram) : SimpleDeasciifier(fsm) {
     this->nGram = nGram;
@@ -20,14 +20,14 @@ NGramDeasciifier::NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, NGram<st
 }
 
 /**
- * The deasciify method takes a {@link Sentence} as an input. First it creates a String {@link ArrayList} as candidates,
- * and a {@link Sentence} result. Then, loops i times where i ranges from 0 to words size of given sentence. It gets the
+ * The deasciify method takes a Sentence as an input. First it creates a String ArrayList as candidates,
+ * and a Sentence result. Then, loops i times where i ranges from 0 to words size of given sentence. It gets the
  * current word and generates a candidateList with this current word then, it loops through the candidateList. First it
  * calls morphologicalAnalysis method with current candidate and gets the first item as root word. If it is the first root,
  * it gets its N-gram probability, if there are also other roots, it gets probability of these roots and finds out the
- * best candidate, best root and the best probability. At the nd, it adds the bestCandidate to the bestCandidate {@link ArrayList}.
+ * best candidate, best root and the best probability. At the nd, it adds the bestCandidate to the bestCandidate ArrayList.
  *
- * @param sentence {@link Sentence} type input.
+ * @param sentence Sentence type input.
  * @return Sentence result as output.
  */
 Sentence *NGramDeasciifier::deasciify(Sentence *sentence) {
