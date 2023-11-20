@@ -23,7 +23,7 @@ void SimpleDeasciifier::generateCandidateList(vector<string> &candidates, const 
             int size = candidates.size();
             for (int i = 0; i < size; i++) {
                 string modified = candidates.at(i);
-                string ch = Word::Word::charAt(word, index);
+                string ch = Word::charAt(word, index);
                 if (ch == "ı"){
                     modified = Word::substring(modified, 0, index) + "i" + Word::substring(modified, index + 1);
                 } else {
