@@ -112,10 +112,18 @@ Word *NGramDeasciifier::checkAnalysisAndSetRoot(Sentence *sentence, int index) {
     return nullptr;
 }
 
-void NGramDeasciifier::setThreshold(double threshold) {
-    this->threshold = threshold;
+/**
+ * Sets minimum N-gram probability threshold for replacement candidates.
+ * @param threshold New N-Gram probability threshold
+ */
+void NGramDeasciifier::setThreshold(double _threshold) {
+    this->threshold = _threshold;
 }
 
+/**
+ * Loads asciified same word list. Asciified same words are the words whose asciified versions are also
+ * valid Turkish words. For example, ascified version of 'ekşi' is 'eksi', ascified version of 'fön' is 'fon'.
+ */
 void NGramDeasciifier::loadAsciifiedSameList() {
     ifstream inputStream;
     inputStream.open("asciified-same.txt", ifstream::in);
