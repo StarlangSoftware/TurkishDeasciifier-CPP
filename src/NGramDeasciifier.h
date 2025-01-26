@@ -7,7 +7,6 @@
 
 
 #include <FsmMorphologicalAnalyzer.h>
-#include <unordered_map>
 #include "NGram.h"
 #include "SimpleDeasciifier.h"
 
@@ -18,7 +17,7 @@ private:
     NGram<string>* nGram = new NGram<string>(1);
     bool rootNGram = false;
     double threshold = 0.0;
-    unordered_map<string, string> asciifiedSame;
+    map<string, string> asciifiedSame;
 public:
     NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, NGram<string>* nGram, bool rootNGram);
     Word* checkAnalysisAndSetRoot(Sentence* sentence, int index);

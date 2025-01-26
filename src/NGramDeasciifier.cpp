@@ -4,6 +4,7 @@
 
 #include "NGramDeasciifier.h"
 #include <fstream>
+#include "StringUtils.h"
 
 /**
  * A constructor of NGramDeasciifier class which takes an FsmMorphologicalAnalyzer and an NGram
@@ -125,12 +126,5 @@ void NGramDeasciifier::setThreshold(double _threshold) {
  * valid Turkish words. For example, ascified version of 'ekşi' is 'eksi', ascified version of 'fön' is 'fon'.
  */
 void NGramDeasciifier::loadAsciifiedSameList() {
-    ifstream inputStream;
-    inputStream.open("asciified-same.txt", ifstream::in);
-    string line;
-    while (inputStream.good()){
-        getline(inputStream, line);
-        vector<string> items = Word::split(line);
-        asciifiedSame.emplace(items[0], items[1]);
-    }
+    asciifiedSame = StringUtils::readHashMap("asciified-same.txt");
 }
