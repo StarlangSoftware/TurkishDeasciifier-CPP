@@ -96,7 +96,7 @@ void SimpleDeasciifier::generateCandidateList(vector<string> &candidates, const 
  * @param word Word type input.
  * @return ArrayList candidates.
  */
-vector<string> SimpleDeasciifier::candidateList(Word *word) {
+vector<string> SimpleDeasciifier::candidateList(const Word *word) {
     vector<string> result;
     vector<string> candidates;
     candidates.push_back(word->getName());

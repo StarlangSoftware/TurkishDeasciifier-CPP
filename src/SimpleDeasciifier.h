@@ -15,7 +15,7 @@ private:
     void generateCandidateList(vector<string>& candidates, const string& word, int index) const;
 public:
     explicit SimpleDeasciifier(const FsmMorphologicalAnalyzer& fsm);
-    vector<string> candidateList(Word* word);
+    vector<string> candidateList(const Word* word);
     Sentence* deasciify(Sentence* sentence) override;
 };
 

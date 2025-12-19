@@ -13,6 +13,7 @@
  *
  * @param fsm   FsmMorphologicalAnalyzer type input.
  * @param nGram NGram type input.
+ * @param rootNgram If true, the NGram is obtained by taking the root words, otherwise lemma forms.
  */
 NGramDeasciifier::NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, NGram<string>* nGram, bool rootNgram) : SimpleDeasciifier(fsm) {
     this->nGram = nGram;
@@ -99,7 +100,7 @@ Sentence *NGramDeasciifier::deasciify(Sentence *sentence) {
  * @param index Index of the word
  * @return If the word is misspelled, null; otherwise the longest root word of the possible analyses.
  */
-Word *NGramDeasciifier::checkAnalysisAndSetRoot(Sentence *sentence, int index) {
+Word *NGramDeasciifier::checkAnalysisAndSetRoot(const Sentence *sentence, int index) {
     if (index < sentence->wordCount()){
         FsmParseList fsmParses = fsm.morphologicalAnalysis(sentence->getWord(index)->getName());
         if (fsmParses.size() != 0){
@@ -115,7 +116,7 @@ Word *NGramDeasciifier::checkAnalysisAndSetRoot(Sentence *sentence, int index) {
 
 /**
  * Sets minimum N-gram probability threshold for replacement candidates.
- * @param threshold New N-Gram probability threshold
+ * @param _threshold New N-Gram probability threshold
  */
 void NGramDeasciifier::setThreshold(double _threshold) {
     this->threshold = _threshold;

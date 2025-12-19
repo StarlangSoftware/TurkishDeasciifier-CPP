@@ -20,7 +20,7 @@ private:
     map<string, string> asciifiedSame;
 public:
     NGramDeasciifier(const FsmMorphologicalAnalyzer& fsm, NGram<string>* nGram, bool rootNGram);
-    Word* checkAnalysisAndSetRoot(Sentence* sentence, int index);
+    Word* checkAnalysisAndSetRoot(const Sentence* sentence, int index);
     void setThreshold(double threshold);
     void loadAsciifiedSameList();
     Sentence* deasciify(Sentence* sentence) override;
